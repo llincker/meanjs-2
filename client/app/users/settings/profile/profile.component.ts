@@ -12,20 +12,19 @@ import { IAppState } from '../../../core/store';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  state :Object;
-  constructor(private usersService : UsersService,
-                private actions : SessionActions, private ngRedux: NgRedux<IAppState> ) {
-     this.ngRedux.subscribe(() =>{
-      this.state=this.ngRedux.getState();
-    })
- 
+  state: Object;
+  constructor(private usersService: UsersService,
+                private actions: SessionActions, private ngRedux: NgRedux<IAppState> ) {
+     this.ngRedux.subscribe(() => {
+      this.state = this.ngRedux.getState();
+    });
  }
 
   ngOnInit() {
     this.actions.getProfile();
-   
+
   }
-  saveProfile(user){
+  saveProfile(user) {
     this.actions.editProfile(user);
   }
 

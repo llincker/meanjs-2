@@ -51,7 +51,13 @@
           <md-card-actions align="center">
             <button md-raised-button color="primary"  type="submit" >Register</button>
             <a md-button [routerLink]="['../login']">Cancel</a>
+            <br/>
+
           </md-card-actions>
+          <div type="danger" *ngIf="messageErr" class="text-danger" align="center">
+            <span>{{messageErr}}</span>
+          </div>
+
         </form>
     </md-card>
 </div>

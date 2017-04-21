@@ -8,7 +8,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 import { Action } from 'redux';
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
@@ -32,8 +32,9 @@ export class SessionEpics {
             type: SessionActions.LOGIN_USER_SUCCESS,
             payload: result.json()
           }))
-          .catch<any, Action>(() => Observable.of({
-            type: SessionActions.LOGIN_USER_ERROR
+          .catch<any, Action>(err => Observable.of({
+            type: SessionActions.LOGIN_USER_ERROR,
+            payload: err.json()
           }));
         });
   }
@@ -43,14 +44,14 @@ export class SessionEpics {
       .filter<IPayloadAction>(({ type }) => type === SessionActions.PUT_USER)
       .mergeMap<IPayloadAction, IPayloadAction>(({ payload }) => {
         let backendURL = `${this._baseUrl}${environment.backend.endpoints.users}` ;
-        return this.http.put(backendURL,payload)
+        return this.http.put(backendURL, payload)
           .map<Response, IPayloadAction>(result => ({
             type: SessionActions.PUT_USER_SUCCESS,
-            payload:{user : result.json(), hasMessage : {type : 'success',message: 'Profile Saved Successfully'}}
+            payload: {user : result.json(), hasMessage : {type : 'success', message: 'Profile Saved Successfully'}}
           }))
           .catch<any, Action>(() => Observable.of({
             type: SessionActions.PUT_USER_ERROR,
-            payload: {type : 'echec',message: 'Profile not Saved Successfully'}
+            payload: {type : 'echec', message: 'Profile not Saved Successfully'}
 
           }));
         });

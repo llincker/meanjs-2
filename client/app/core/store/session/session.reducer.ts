@@ -5,7 +5,7 @@ import {
   INITIAL_USER_STATE,
   UserFactory,
 } from './session.initial-state';
-import {actionTypes} from 'redux-localstorage'
+import {actionTypes} from 'redux-localstorage';
 
 export const sessionReducer = (
   state: ISessionRecord = INITIAL_STATE,
@@ -26,7 +26,7 @@ export const sessionReducer = (
         user: UserFactory(action.payload.user),
         hasError: false,
         isLoading: false,
-        hasMessage :null,
+        hasMessage : null,
         actionType : action.type
       });
 
@@ -36,8 +36,8 @@ export const sessionReducer = (
         user: INITIAL_USER_STATE,
         hasError: true,
         isLoading: false,
-        hasMessage :null,
-        actionType : action.type
+        hasMessage: action.payload,
+        actionType: action.type
       });
 
     case SessionActions.LOGOUT_USER:
@@ -60,7 +60,8 @@ export const sessionReducer = (
           isLoading: persistedState.session.isLoading,
         });
       }
-      case SessionActions.PUT_USER :
+      break;
+    case SessionActions.PUT_USER :
        {
         return state.merge({
           hasMessage: null,
@@ -68,6 +69,7 @@ export const sessionReducer = (
           isLoading: true
         });
       }
+<<<<<<< 14d787dfb007c8a2cdb3cc00adf70b3c5293cffd
         case SessionActions.PUT_USER_SUCCESS:
           return state.merge({
             user: UserFactory(action.payload.user),
@@ -83,20 +85,38 @@ export const sessionReducer = (
             isLoading: false,
             hasMessage: action.payload.hasMessage,
             actionType : action.type
+=======
+    case SessionActions.PUT_USER_SUCCESS:
+        return state.merge({
+          user: UserFactory(action.payload.user),
+          hasMessage : action.payload.hasMessage,
+          hasError: false,
+          isLoading: false,
+          actionType : action.type
+        });
+    case SessionActions.PUT_USER_ERROR:
+        return state.merge({
+          token: null,
+          user: INITIAL_USER_STATE,
+          hasError: true,
+          isLoading: false,
+          hasMessage: null,
+          actionType : action.type
+>>>>>>> Error handling login and register
         });
 
         case SessionActions.GET_USER:
           return state.merge({
             hasError: false,
             isLoading: false,
-            hasMessage:null
+            hasMessage: null
         });
         case SessionActions.GET_USER_SUCCESS:
           return state.merge({
             user: UserFactory(action.payload),
             hasError: false,
             isLoading: false,
-            hasMessage:null
+            hasMessage: null
         });
         case SessionActions.GET_USER_ERROR:
           return state.merge({
@@ -111,7 +131,7 @@ export const sessionReducer = (
           return state.merge({
             hasError: false,
             isLoading: false,
-            hasMessage:null,
+            hasMessage: null,
             actionType : action.type
         });
         case SessionActions.CHANGE_PASSWORD_SUCCESS:

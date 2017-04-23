@@ -27,6 +27,9 @@
                 <button md-raised-button color="primary"  type="submit" >Login</button>
                 <a md-button [routerLink]="['../register']">Register</a>
             </md-card-actions>
+          <div type="danger" *ngIf="state?.session.actionType==='LOGIN_USER_ERROR'"  align="center" class="text-danger">
+            <span>{{state?.session.hasMessage?.get('message')}}</span>
+          </div>
         </form>
     </md-card>
 </div>

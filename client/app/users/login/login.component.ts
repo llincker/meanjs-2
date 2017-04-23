@@ -16,26 +16,32 @@ import { UsersService } from '../services/index';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   returnUrl: string;
   @select(['session', 'isLoading']) isLoading$: Observable<boolean>;
   @select(['session', 'token']) loggedIn$: Observable<string>;
 
   form: FormGroup;
+  state: Object;
+
+  static isLoggedOut(s) { return !s.session.token; }
 
   constructor(
     private route: ActivatedRoute,
     private ngReduxRouter: NgReduxRouter,
     private router: Router,
     private actions: SessionActions,
-    private ngRedux:NgRedux<IAppState>,
-    private usersService:UsersService ) {
+    private ngRedux: NgRedux<IAppState>,
+    private usersService: UsersService ) {
     this.form = this._buildForm();
   }
 
   ngOnInit() {
     // reset login status
     // this.actions.logoutUser();
-
+    this.ngRedux.subscribe(() => {
+      this.state = this.ngRedux.getState();
+    });
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -48,12 +54,10 @@ export class LoginComponent implements OnInit {
 
       },
       error => {
-        console.log("fail to check login");
+        console.log('fail to check login')
         this.actions.logoutUser();
       });
   }
-
-
 
   login(formCredentials) {
     this.actions.loginUser(formCredentials);
@@ -65,8 +69,4 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     });
   }
-
-
-  static isLoggedOut(s){ return !s.session.token; }
-
 }

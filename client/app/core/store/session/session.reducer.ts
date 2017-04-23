@@ -69,7 +69,6 @@ export const sessionReducer = (
           isLoading: true
         });
       }
-<<<<<<< 14d787dfb007c8a2cdb3cc00adf70b3c5293cffd
         case SessionActions.PUT_USER_SUCCESS:
           return state.merge({
             user: UserFactory(action.payload.user),
@@ -85,24 +84,6 @@ export const sessionReducer = (
             isLoading: false,
             hasMessage: action.payload.hasMessage,
             actionType : action.type
-=======
-    case SessionActions.PUT_USER_SUCCESS:
-        return state.merge({
-          user: UserFactory(action.payload.user),
-          hasMessage : action.payload.hasMessage,
-          hasError: false,
-          isLoading: false,
-          actionType : action.type
-        });
-    case SessionActions.PUT_USER_ERROR:
-        return state.merge({
-          token: null,
-          user: INITIAL_USER_STATE,
-          hasError: true,
-          isLoading: false,
-          hasMessage: null,
-          actionType : action.type
->>>>>>> Error handling login and register
         });
 
         case SessionActions.GET_USER:
@@ -124,7 +105,7 @@ export const sessionReducer = (
             user: INITIAL_USER_STATE,
             hasError: true,
             isLoading: false,
-            hasMessage:null,
+            hasMessage: null
         });
 
         case SessionActions.CHANGE_PASSWORD:
